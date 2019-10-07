@@ -1,8 +1,10 @@
 import os
 from setuptools import setup, find_packages
 
-curdir = os.path.dirname(__file__)
-with open(os.path.join(curdir, 'VERSION')) as vf:
+here = os.path.dirname(__file__)
+
+
+with open(os.path.join(here, 'VERSION')) as vf:
     VERSION = vf.read().strip()
 
 setup(
