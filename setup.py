@@ -3,7 +3,7 @@ from setuptools import setup
 
 here = os.path.dirname(__file__)
 
-with open(os.path.join(here, 'VERSION')) as vf:
+with open(os.path.join(here, 'hwsdk', 'VERSION')) as vf:
     VERSION = vf.read().strip()
 
 setup(
