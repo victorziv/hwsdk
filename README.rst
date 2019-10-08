@@ -1,5 +1,2 @@
-HWInfraSDK is a Python SDK to share between various Infinidat Hardware team related projects
-
-For example, to use Infinidat Skybox system encapsulation object put the following in your code:
-
-from hwinfrasdk.machine.skybox import Skybox 
+This character is described through all versions as having two heads and three arms.
+Though explanations of how he came to receive those extra appendages differ between versions.
