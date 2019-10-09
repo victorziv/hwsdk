@@ -1,4 +1,5 @@
 import os
+import sys
 from shutil import rmtree
 from setuptools import setup, Command
 
@@ -49,7 +50,13 @@ class UploadCommand(Command):
     # ________________________________________
 
     def build_pkg(self):
-        pass
+        self.status('Building source and wheel (universal) distribution...')
+        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+    # ________________________________________
+
+    def upload_pkg(self):
+        self.status('Uploading the package to PyPi via Twine...')
+        os.system('twine upload dist/*')
     # ________________________________________
 
     def bump_version_patch(self):
@@ -63,8 +70,14 @@ class UploadCommand(Command):
     # ________________________________________
 
     def run(self):
-        self.remove_previous()
-        self.bump_version_patch()
+        try:
+            self.remove_previous()
+            self.bump_version_patch()
+            self.build_pkg()
+        except OSError:
+            pass
+
+        sys.exit()
 # ===========================================
 
 
