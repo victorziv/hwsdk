@@ -101,7 +101,7 @@ class UploadCommand(Command):
 
     def upload_pkg(self):
         self.status('Uploading the package to TestPyPi via Twine...')
-        os.system('twine upload dist/*')
+        os.system('twine upload --repository testpypi dist/*')
     # ________________________________________
 
     def bump_version_patch(self):
