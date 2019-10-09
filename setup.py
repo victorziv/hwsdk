@@ -1,7 +1,7 @@
 import os
 import sys
 from shutil import rmtree
-from setuptools import setup, Command
+from setuptools import setup, find_packages, Command
 
 here = os.path.abspath(os.path.dirname(__file__))
 # ===========================================
@@ -50,13 +50,18 @@ class UploadCommand(Command):
     # ________________________________________
 
     def build_pkg(self):
-        self.status('Building source and wheel (universal) distribution...')
-        os.system('{0} setup.py sdist bdist_wheel --universal'.format(sys.executable))
+        self.status('Building source and wheel distribution...')
+        os.system('{0} setup.py sdist bdist_wheel'.format(sys.executable))
+    # ________________________________________
+
+    def check_pkg(self):
+        self.status('Checking built packages...')
+        os.system('twine check dist/*')
     # ________________________________________
 
     def upload_pkg(self):
-        self.status('Uploading the package to PyPi via Twine...')
-        os.system('twine upload dist/*')
+        self.status('Uploading the package to TestPyPi via Twine...')
+        os.system('twine upload  --repository testpypi dist/*')
     # ________________________________________
 
     def bump_version_patch(self):
@@ -74,6 +79,8 @@ class UploadCommand(Command):
             self.remove_previous()
             self.bump_version_patch()
             self.build_pkg()
+            self.check_pkg()
+            self.upload_pkg()
         except OSError:
             pass
 
@@ -87,7 +94,7 @@ setup(
     author="Victor Ziv",
     author_email="ziv.victor@gmail.com",
     url='https://github.com/victorziv/hwsdk',
-    packages=['hwsdk'],
+    packages=find_packages(),
     long_description=open('README.rst').read(),
     long_description_content_type="text/x-rst",
     install_requires=[
