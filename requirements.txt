@@ -1,0 +1,6 @@
+-e .
+pytest
+ipython
+flake8
+pyflakes
+docutils
