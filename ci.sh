@@ -24,8 +24,12 @@ publish() {
 
 main() {
     set_env
-    run_tests
-    publish
+    make venv
+    make init
+    source venv/bin/activate
+#    run_tests
+    make ci
+    make publish
 }
 # ______________________________________
 

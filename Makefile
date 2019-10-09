@@ -22,8 +22,9 @@ coverage:
 
 publish:
 	pip install 'twine>=1.5.0'
-	python setup.py sdist bdist_wheel
+#     python setup.py sdist bdist_wheel
 #     twine upload --repository testpypi dist/*
+	python setup.py publish
 	rm -fr build dist .egg hwsdk.egg-info
 
 docs:
