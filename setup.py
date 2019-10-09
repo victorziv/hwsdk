@@ -116,7 +116,6 @@ class UploadCommand(Command):
 
     def run(self):
         try:
-            self.test_before()
             self.remove_previous()
             self.bump_version_patch()
             self.build_pkg()
@@ -128,9 +127,6 @@ class UploadCommand(Command):
         sys.exit()
     # ________________________________________
 
-    def test_before(self):
-        self.status('Running tests before trying to build...')
-        os.system('{0} setup.py test'.format(sys.executable))
 # ===========================================
 
 
@@ -157,7 +153,6 @@ setup(
         'test': PyTest,
     },
 
-    test_require=['pytest'],
     extras_require={
         'testing': ['pytest'],
     }

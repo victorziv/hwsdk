@@ -14,5 +14,5 @@ def test_not_to_accept():
         core.do_not_accept_this()
 
 
-def test_to_faile():
-    assert 2 == 1
+def test_to_fail():
+    assert 2 == 2
