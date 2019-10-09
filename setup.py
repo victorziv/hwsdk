@@ -21,6 +21,8 @@ def write_version(version):
 
 
 class TagsCommand(Command):
+    user_options = []
+
     def initialize_options(self):
         """ Abstract method in parent class - must override"""
         pass
