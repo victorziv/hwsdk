@@ -20,6 +20,26 @@ def write_version(version):
 # ===========================================
 
 
+class TagsCommand(Command):
+    def initialize_options(self):
+        """ Abstract method in parent class - must override"""
+        pass
+    # _______________________________________
+
+    def finalize_options(self):
+        """ Abstract method in parent class - must override"""
+        pass
+    # _______________________________________
+
+    def run(self):
+        version = read_version()
+        os.system("git tag -a %s -m 'Version %s'" % (version, version))
+        os.system("git push --tags")
+        sys.exit()
+
+# =============================================
+
+
 class UploadCommand(Command):
 
     user_options = []
@@ -105,6 +125,7 @@ setup(
 
     # setup.py publish support
     cmdclass={
-        'upload': UploadCommand
+        'upload': UploadCommand,
+        'tags': TagsCommand
     }
 )
