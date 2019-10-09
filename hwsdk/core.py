@@ -14,13 +14,11 @@ def get_life():
     return life
 # ______________________________
 
+
 def do_not_accept_this():
     raise RuntimeError("You've just done a mistake of your life")
 # ______________________________
 
 
-
-
 if __name__ == '__main__':
     get_life()
-
