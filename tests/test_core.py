@@ -12,3 +12,7 @@ def test_getting_life():
 def test_not_to_accept():
     with pytest.raises(RuntimeError):
         core.do_not_accept_this()
+
+
+def test_to_faile():
+    assert 2 == 1

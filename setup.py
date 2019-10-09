@@ -2,6 +2,7 @@ import os
 import sys
 from shutil import rmtree
 from setuptools import setup, find_packages, Command
+from setuptools.command.test import test as TestCommand
 
 here = os.path.abspath(os.path.dirname(__file__))
 # ===========================================
@@ -38,6 +39,23 @@ class TagsCommand(Command):
         os.system("git tag -a %s -m 'Version %s'" % (version, version))
         os.system("git push --tags")
         sys.exit()
+
+# =============================================
+
+
+class PyTest(TestCommand):
+    # ____________________________
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = ['--strict', '--verbose', '--tb=long', 'tests']
+        self.test_suite = True
+    # ____________________________
+
+    def run_tests(self):
+        import pytest
+        errno = pytest.main(self.test_args)
+        sys.exit(errno)
 
 # =============================================
 
@@ -98,6 +116,7 @@ class UploadCommand(Command):
 
     def run(self):
         try:
+            self.test_before()
             self.remove_previous()
             self.bump_version_patch()
             self.build_pkg()
@@ -107,6 +126,11 @@ class UploadCommand(Command):
             pass
 
         sys.exit()
+    # ________________________________________
+
+    def test_before(self):
+        self.status('Running tests before trying to build...')
+        os.system('{0} setup.py test'.format(sys.executable))
 # ===========================================
 
 
@@ -128,6 +152,13 @@ setup(
     # setup.py publish support
     cmdclass={
         'upload': UploadCommand,
-        'tags': TagsCommand
+        'publish': UploadCommand,
+        'tags': TagsCommand,
+        'test': PyTest,
+    },
+
+    test_require=['pytest'],
+    extras_require={
+        'testing': ['pytest'],
     }
 )
